@@ -11,7 +11,6 @@ function urlFor(source){
 
 const SinglePost = () => {
   const [singlePost, setSinglePost] = useState(null)
-  const [author, setAuthor] = useState(null)
   const { slug } = useParams();
 
   useEffect(() => {
@@ -33,20 +32,6 @@ const SinglePost = () => {
     }`).then((data)=> setSinglePost(data[0]))
     .catch(console.error)
   }, [slug])
-
-  useEffect(() => {
-    sanityClient.fetch(`*[_type == "author"]{
-      name,
-      image{
-        asset->{
-          _id,
-          url
-        }
-      },
-      _id
-    }`).then((data)=> setAuthor(data))
-    .catch(console.error)
-  }, [])
 
   if (!singlePost) return <div>Loading...</div>
   return (
